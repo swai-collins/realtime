@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "906750771002",
+    "project_id": "blue-cfef8",
+    "storage_bucket": "blue-cfef8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906750771002:android:cadd0a20292cac7ec85a03",
+        "android_client_info": {
+          "package_name": "com.example.bluez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906750771002-9in2gfh02sccutkdhnhp68ji9mq4c70j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp_MZT3Q0LwErpuxtCOlQT0ZkvWP0L5Ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906750771002-9in2gfh02sccutkdhnhp68ji9mq4c70j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
