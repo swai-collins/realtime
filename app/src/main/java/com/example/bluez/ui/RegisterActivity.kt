@@ -1,15 +1,12 @@
 package com.example.bluez.ui
 
-import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.widget.Toast
 import com.example.bluez.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -35,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
             val confirmPassword = binding.txtInputConfirmPassword.text.toString().trim()
             val username = binding.txtInputName.text.toString().trim()
             val email = binding.txtInputEmail.text.toString().trim()
+            val phone = binding.txtInputPhone.text.toString().trim()
 
 
             when {
@@ -53,8 +51,8 @@ class RegisterActivity : AppCompatActivity() {
                     binding.txtInputPassword.requestFocus()
                     return@setOnClickListener
                 }
-                confirmPassword.isEmpty() -> {
-                    binding.txtInputConfirmPassword.error = "Enter Confirmation Passwod!"
+                confirmPassword != password -> {
+                    binding.txtInputConfirmPassword.error = "Confirm Password Don`t Match!"
                     binding.txtInputConfirmPassword.requestFocus()
                     return@setOnClickListener
                 }
@@ -68,8 +66,13 @@ class RegisterActivity : AppCompatActivity() {
                     binding.txtInputEmail.requestFocus()
                     return@setOnClickListener
                 }
+                phone.isEmpty() -> {
+                    binding.txtInputPhone.error = "Phone Number Required!"
+                    binding.txtInputPhone.requestFocus()
+                    return@setOnClickListener
+                }
             }
-            registerUser(emails, password, username)
+            registerUser(emails,password,username,phone)
         }
 
         binding.txtHaveAccount.setOnClickListener {
@@ -77,9 +80,9 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUser(email: String, password: String,username: String){
+    private fun registerUser(email: String, password: String, username: String, phoneNumber: String){
         val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Registration User")
+        progressDialog.setTitle("Registaring User")
         progressDialog.setMessage("Please Wait!")
         progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
@@ -90,20 +93,21 @@ class RegisterActivity : AppCompatActivity() {
 //                    val intent = Intent(this, ProfileActivity::class.java)
 //                    startActivity(intent)
 //                    finish()
-                    saveUserInfo(email,username,progressDialog)
+                    saveUserInfo(email,username,phoneNumber, progressDialog)
                 } else{
                     Toast.makeText(applicationContext,"Registration Failed!", Toast.LENGTH_LONG).show()
                 }
             }
     }
 
-    private fun saveUserInfo(email: String, username:String,progressDialog: ProgressDialog){
+    private fun saveUserInfo(email: String, username:String, phoneNumber: String ,progressDialog: ProgressDialog,){
         val currentUserId = mAuth.currentUser!!.uid
         databaseReference = FirebaseDatabase.getInstance().reference.child("USERS")
         val userMap = HashMap<String,Any>()
         userMap["id"] = currentUserId
         userMap["email"] = email
         userMap["username"] = username
+        userMap["phoneNumber"] = phoneNumber
 
         databaseReference.child(currentUserId).setValue(userMap).addOnCompleteListener {
             if (it.isSuccessful){
