@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Bluez</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="have_account">Already have a Bluezone account? Sign In</string>
+    <string name="dont_have_account">Don`t have a Bluezone account? Sign Up</string>
+    <string name="logged_in">You\'re logged in successfully</string>
+    <string name="txtname">John Doe</string>
+    <string name="txtEmail">johndoe@gmail.com</string>
+    <string name="log_out">Logout</string>
+    <string name="rsvp">RSVP</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="or_sign">Or Login with: </string>
+    <string name="or_register">Or register with: </string>
+    <string name="update">Update</string>
+    <string name="logout">Logout</string>
+    <string name="Bluezone">Bluezone</string>
+</resources>
