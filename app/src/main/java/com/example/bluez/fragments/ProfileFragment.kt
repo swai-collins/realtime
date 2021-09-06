@@ -1,21 +1,18 @@
 package com.example.bluez.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Binder
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.bluez.R
 import com.example.bluez.model.User
@@ -29,6 +26,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
 import com.example.bluez.ui.LoginActivity
 import io.grpc.Context
+import android.content.ContentResolver as ContentResolver
+import android.content.ContentResolver as ContentResolver1
 
 class ProfileFragment : Fragment() {
     lateinit var mAuth: FirebaseAuth
@@ -36,11 +35,13 @@ class ProfileFragment : Fragment() {
     private lateinit var image: ImageView
     private val REQUEST_IMAGE_CAPTURE = 100
     private lateinit var imageUri: Uri
+    private lateinit var filePath: Uri
     private lateinit var button: Button
     private lateinit var update: Button
 
 
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,10 +51,10 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         mAuth = FirebaseAuth.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
-
-
         userInfo()
         return view
+        setHasOptionsMenu(true)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,6 +62,7 @@ class ProfileFragment : Fragment() {
 
         update = view.findViewById(R.id.btnUpdate)
         update.setOnClickListener {
+            startFileChooser()
         }
 
         image = view.findViewById(R.id.imageUser)
@@ -71,7 +73,49 @@ class ProfileFragment : Fragment() {
         button.setOnClickListener {
             logout()
         }
+        setHasOptionsMenu(true)
     }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_post,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.delete -> {
+                showDeleteDialog()
+                true
+            } else -> super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showDeleteDialog() {
+        AlertDialog.Builder(context)
+            .setTitle("Are you sure?")
+            .setMessage("Deleting this account will result in completely removing your account from accessing the system and you won`t be able to access the app.")
+            .setPositiveButton("YES") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setNegativeButton("NO") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+    private fun startFileChooser() {
+        var i = Intent()
+        i.setType("image/*")
+        i.setAction(Intent.ACTION_GET_CONTENT)
+        startActivityForResult(Intent.createChooser(i,"Choose Picture"),100)
+
+    }
+
     private fun logout(){
         if (mAuth.currentUser != null)
             mAuth.signOut()
@@ -89,7 +133,10 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null){
+            filePath = data.data!!
+            var bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, filePath)
+            image.setImageBitmap(bitmap)
             val imageBitmap = data?.extras?.get("data") as Bitmap
             uploadImageAndSaveUrl(imageBitmap)
         }
