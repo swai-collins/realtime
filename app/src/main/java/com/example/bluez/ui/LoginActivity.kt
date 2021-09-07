@@ -1,5 +1,6 @@
 package com.example.bluez.ui
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,10 +28,18 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             loginUser()
         }
+        binding.txtForgotPassword.setOnClickListener {
+            startActivity(Intent(this,ForgotPasswordActivity::class.java))
+        }
     }
 
 
     private fun loginUser(){
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Sign In User")
+        progressDialog.setMessage("Please Wait!")
+        progressDialog.setCanceledOnTouchOutside(true)
+        progressDialog.show()
         val email: String =  binding.txtEnterEmail.text.toString().trim()
         val password: String = binding.txtEnterPassword.text.toString().trim()
 
