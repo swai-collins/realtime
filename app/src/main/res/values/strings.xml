@@ -14,7 +14,10 @@
     <string name="home">Home</string>
     <string name="or_sign">Or Login with: </string>
     <string name="or_register">Or register with: </string>
-    <string name="update">Update</string>
+    <string name="update">Upload</string>
     <string name="logout">Logout</string>
     <string name="Bluezone">Bluezone</string>
+    <string name="reset">Reset Password</string>
+    <string name="get">Get Link</string>
+    <string name="done">Done</string>
 </resources>
