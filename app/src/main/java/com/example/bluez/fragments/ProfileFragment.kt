@@ -2,8 +2,10 @@ package com.example.bluez.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -32,13 +34,15 @@ import android.content.ContentResolver as ContentResolver1
 class ProfileFragment : Fragment() {
     lateinit var mAuth: FirebaseAuth
     private lateinit var firebaseUser: FirebaseUser
-    private lateinit var image: ImageView
+    private lateinit var image: CircleImageView
     private val REQUEST_IMAGE_CAPTURE = 100
-    private lateinit var imageUri: Uri
     private lateinit var filePath: Uri
     private lateinit var button: Button
     private lateinit var update: Button
-
+    private lateinit var txtEmail: Button
+    private lateinit var txtUsername: Button
+    private lateinit var txtPhone: Button
+    private lateinit var txtId: Button
 
 
     @SuppressLint("RestrictedApi")
@@ -53,39 +57,46 @@ class ProfileFragment : Fragment() {
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
         userInfo()
         return view
-        setHasOptionsMenu(true)
-
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         update = view.findViewById(R.id.btnUpdate)
         update.setOnClickListener {
-            startFileChooser()
+            uploadFile()
         }
-
         image = view.findViewById(R.id.imageUser)
         image.setOnClickListener {
-            takePicture()
+            startFileChooser()
         }
         button = view.findViewById(R.id.btnLogout)
         button.setOnClickListener {
             logout()
         }
-        setHasOptionsMenu(true)
+        //update userName
+        txtUsername =  view.findViewById(R.id.btnUserName)
+        txtUsername.setOnClickListener {
+
+        }
+        //update Email
+        txtEmail = view.findViewById(R.id.btnUpdateEmail)
+        txtEmail.setOnClickListener {
+
+        }
+        //update Phone
+        txtPhone = view.findViewById(R.id.btnUpdatePhone)
+        txtPhone.setOnClickListener {
+
+        }
+        //update National Id
+        txtId = view.findViewById(R.id.btnUpdateId)
+        txtId.setOnClickListener {
+
+        }
     }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_post,menu)
+        inflater.inflate(R.menu.menu_post, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.delete -> {
@@ -95,7 +106,35 @@ class ProfileFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK && data != null  ){
+            filePath= data.data!!
+            var bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, filePath)
+            image.setImageBitmap(bitmap)
+        }
+    }
+    private fun uploadFile(){
+        if (filePath!=null){
+            var pd = ProgressDialog(context)
+            pd.setTitle("Uploading")
+            pd.show()
+            var imageRef = FirebaseStorage.getInstance().reference.child("images/${FirebaseAuth.getInstance().currentUser?.uid}")
+            imageRef.putFile(filePath)
+                .addOnSuccessListener {
+                    pd.dismiss()
+                    Toast.makeText(activity,"Image Uploaded",Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener{p0 ->
+                    pd.dismiss()
+                    Toast.makeText(activity,p0.message,Toast.LENGTH_LONG).show()
+                }
+                .addOnProgressListener {p0 ->
+                    var progress = (100.0 * p0.bytesTransferred) / p0.totalByteCount
+                    pd.setMessage("Upload ${progress.toInt()}%")
+                }
+        }
+    }
     private fun showDeleteDialog() {
         AlertDialog.Builder(context)
             .setTitle("Are you sure?")
@@ -107,61 +146,17 @@ class ProfileFragment : Fragment() {
                 dialog.dismiss()
             }.show()
     }
-
     private fun startFileChooser() {
         var i = Intent()
-        i.setType("image/*")
-        i.setAction(Intent.ACTION_GET_CONTENT)
+        i.type = "image/*"
+        i.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(i,"Choose Picture"),100)
-
     }
-
     private fun logout(){
         if (mAuth.currentUser != null)
             mAuth.signOut()
         val intent = Intent(activity, RegisterActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun takePicture(){
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { pictureIntent ->
-            pictureIntent.resolveActivity(activity?.packageManager!!)?.also {
-                startActivityForResult(pictureIntent,REQUEST_IMAGE_CAPTURE)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null){
-            filePath = data.data!!
-            var bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, filePath)
-            image.setImageBitmap(bitmap)
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            uploadImageAndSaveUrl(imageBitmap)
-        }
-    }
-
-    private fun uploadImageAndSaveUrl(bitmap: Bitmap){
-        val baos = ByteArrayOutputStream()
-        val storageRef = FirebaseStorage.getInstance().reference.child("pics/${FirebaseAuth.getInstance().currentUser?.uid}")
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos)
-        val image = baos.toByteArray()
-
-        val upload = storageRef.putBytes(image)
-
-
-        upload.addOnCompleteListener { uploadTask ->
-            if (upload.isSuccessful){
-                storageRef.downloadUrl.addOnCompleteListener { urlTask ->
-                    urlTask.result?.let {
-                        imageUri = it
-                    }
-                }
-            } else {
-                Toast.makeText(activity,"Can`t upload image",Toast.LENGTH_SHORT).show();
-            }
-        }
     }
     private fun userInfo(){
         val userRef = FirebaseDatabase.getInstance().reference.child("USERS").child(firebaseUser.uid)
@@ -177,11 +172,11 @@ class ProfileFragment : Fragment() {
                     tvName.text = user!!.phoneNumber
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
+
+
 }
