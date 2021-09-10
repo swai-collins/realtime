@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         progressDialog.setMessage("Please Wait!")
         progressDialog.setCanceledOnTouchOutside(true)
         progressDialog.show()
+//        progressDialog.cancel()
         val email: String =  binding.txtEnterEmail.text.toString().trim()
         val password: String = binding.txtEnterPassword.text.toString().trim()
 
@@ -53,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful){
-                    Toast.makeText(applicationContext, "Successfully Signed In",Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Successfully Logged In",Toast.LENGTH_LONG).show()
                     var intent = Intent(applicationContext,ProfileActivity::class.java)
                     startActivity(intent)
                     finish()
