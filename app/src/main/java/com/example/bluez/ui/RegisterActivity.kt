@@ -52,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
                 confirmPassword != password -> {
-                    binding.txtInputConfirmPassword.error = "Confirm Password Don`t Match!"
+                    binding.txtInputConfirmPassword.error = "Password Do Not Match!"
                     binding.txtInputConfirmPassword.requestFocus()
                     return@setOnClickListener
                 }
@@ -82,10 +82,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registerUser(email: String, password: String, username: String, phoneNumber: String){
         val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Registaring User")
-        progressDialog.setMessage("Please Wait!")
-        progressDialog.setCanceledOnTouchOutside(false)
-        progressDialog.show()
+//        progressDialog.setTitle("Registering User")
+//        progressDialog.setMessage("Please Wait!")
+//        progressDialog.setCanceledOnTouchOutside(false)
+//        progressDialog.show()
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {task ->
                 if (task.isSuccessful){
@@ -95,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
 //                    finish()
                     saveUserInfo(email,username,phoneNumber, progressDialog)
                 } else{
-                    Toast.makeText(applicationContext,"Registration Failed!", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(applicationContext,"Registration Failed!", Toast.LENGTH_LONG).show()
                 }
             }
     }
@@ -112,7 +112,7 @@ class RegisterActivity : AppCompatActivity() {
         databaseReference.child(currentUserId).setValue(userMap).addOnCompleteListener {
             if (it.isSuccessful){
                 progressDialog.dismiss()
-                Toast.makeText(applicationContext, "Registration Successfull", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Registration successful", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
                 finish()
