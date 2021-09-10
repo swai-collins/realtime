@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bluez">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"
+        android:required="true"
+        android:requiredFeature="true"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,10 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bluez">
         <activity
-            android:name=".ui.HomeActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.ProfilesActivity"
+            android:name=".ui.ForgotPasswordActivity"
             android:exported="true" />
         <activity
             android:name=".ui.ProfileActivity"
