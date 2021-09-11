@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/background_card.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/drawable/btn_next.xml" value="0.33541666666666664" />
+        <entry key="app/src/main/res/drawable/ic_add_photo.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/drawable/ic_login_bk.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/drawable/ic_twotone_home_24.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/drawable/lightsplit.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/drawable/login_shape_bk.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/drawable/person.xml" value="0.33541666666666664" />
+        <entry key="app/src/main/res/drawable/schedule.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.31927083333333334" />
@@ -19,6 +23,8 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_r_s_v_p.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.31927083333333334" />
+        <entry key="app/src/main/res/menu/menu_delete.xml" value="0.31927083333333334" />
+        <entry key="app/src/main/res/menu/menu_post.xml" value="0.31927083333333334" />
       </map>
     </option>
   </component>

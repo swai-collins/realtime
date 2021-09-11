@@ -30,6 +30,10 @@ import com.example.bluez.ui.LoginActivity
 import io.grpc.Context
 import android.content.ContentResolver as ContentResolver
 import android.content.ContentResolver as ContentResolver1
+import android.content.DialogInterface
+import android.text.TextUtils
+import com.google.firebase.ktx.Firebase
+
 
 class ProfileFragment : Fragment() {
     lateinit var mAuth: FirebaseAuth
@@ -75,7 +79,6 @@ class ProfileFragment : Fragment() {
         //update userName
         txtUsername =  view.findViewById(R.id.btnUserName)
         txtUsername.setOnClickListener {
-
         }
         //update Email
         txtEmail = view.findViewById(R.id.btnUpdateEmail)
