@@ -1,21 +1,18 @@
 package com.example.bluez.fragments
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Binder
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
-import com.bumptech.glide.Glide
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.example.bluez.R
 import com.example.bluez.model.User
 import com.example.bluez.ui.RegisterActivity
@@ -23,16 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import de.hdodenhof.circleimageview.CircleImageView
-import java.io.ByteArrayOutputStream
-import com.example.bluez.ui.LoginActivity
-import io.grpc.Context
-import android.content.ContentResolver as ContentResolver
-import android.content.ContentResolver as ContentResolver1
-import android.content.DialogInterface
-import android.text.TextUtils
-import com.google.firebase.ktx.Firebase
 
 
 class ProfileFragment : Fragment() {
@@ -64,6 +52,9 @@ class ProfileFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity?)!!.supportActionBar?.title = "Profile"
+
         update = view.findViewById(R.id.btnUpdate)
         update.setOnClickListener {
             uploadFile()
@@ -83,7 +74,6 @@ class ProfileFragment : Fragment() {
         //update Email
         txtEmail = view.findViewById(R.id.btnUpdateEmail)
         txtEmail.setOnClickListener {
-
         }
         //update Phone
         txtPhone = view.findViewById(R.id.btnUpdatePhone)
@@ -96,6 +86,7 @@ class ProfileFragment : Fragment() {
 
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_post, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -176,7 +167,6 @@ class ProfileFragment : Fragment() {
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
     }
