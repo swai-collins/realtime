@@ -9,10 +9,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
+import android.webkit.WebSettings
 import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.bluez.R
 import com.example.bluez.model.User
 import com.example.bluez.ui.RegisterActivity
@@ -21,6 +26,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
+import java.lang.reflect.Array.newInstance
+import javax.xml.datatype.DatatypeFactory.newInstance
+import javax.xml.parsers.DocumentBuilderFactory.newInstance
 
 
 class ProfileFragment : Fragment() {
@@ -31,10 +39,7 @@ class ProfileFragment : Fragment() {
     private lateinit var filePath: Uri
     private lateinit var button: Button
     private lateinit var update: Button
-    private lateinit var txtEmail: Button
-    private lateinit var txtUsername: Button
-    private lateinit var txtPhone: Button
-    private lateinit var txtId: Button
+    private lateinit var phone: Button
 
 
     @SuppressLint("RestrictedApi")
@@ -67,23 +72,12 @@ class ProfileFragment : Fragment() {
         button.setOnClickListener {
             logout()
         }
-        //update userName
-        txtUsername =  view.findViewById(R.id.btnUserName)
-        txtUsername.setOnClickListener {
-        }
-        //update Email
-        txtEmail = view.findViewById(R.id.btnUpdateEmail)
-        txtEmail.setOnClickListener {
-        }
-        //update Phone
-        txtPhone = view.findViewById(R.id.btnUpdatePhone)
-        txtPhone.setOnClickListener {
-
-        }
-        //update National Id
-        txtId = view.findViewById(R.id.btnUpdateId)
-        txtId.setOnClickListener {
-
+        phone = view.findViewById(R.id.btnUpdatePhone)
+        phone.setOnClickListener {
+            val mDialogView = LayoutInflater.from(context).inflate(R.layout.fragment_phone_change, null)
+            val mBuilder = AlertDialog.Builder(context)
+                .setView(mDialogView)
+            mBuilder.show()
         }
     }
 
