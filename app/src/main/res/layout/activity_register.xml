@@ -33,7 +33,7 @@
             style="@style/AppTextField"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:hint="Username"
+            android:hint="Full Name"
             android:layout_marginTop="15dp"
             app:startIconDrawable="@drawable/person"
             app:layout_constraintTop_toBottomOf="@id/txtRegister"
