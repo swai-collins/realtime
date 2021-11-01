@@ -29,4 +29,9 @@
         <item name="colorPrimary">@color/blue</item>
         <item name="colorOnPrimary">@color/lightBlue</item>
     </style>
+    <style name="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="materialThemeOverlay">
+            @style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox.Dense
+        </item>
+    </style>
 </resources>
