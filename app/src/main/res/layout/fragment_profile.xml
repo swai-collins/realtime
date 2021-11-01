@@ -6,12 +6,15 @@
     android:background="#EEE"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ProfileFragment">
+
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/blue"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardBack"
@@ -30,7 +33,18 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginStart="15dp"
-                    android:background="@drawable/icon"/>
+                    android:background="@drawable/icon"
+                    />
+                <ImageView
+                    android:id="@+id/imgCamera"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="69dp"
+                    android:layout_marginStart="80dp"
+                    android:src="@drawable/ic_camera"
+                    app:layout_anchor="@id/imageUser"
+                    app:layout_anchorGravity="end|bottom"
+                    />
                 <TextView
                     android:id="@+id/nameUser"
                     android:text="Name"
@@ -50,14 +64,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
-                <Button
-                    android:id="@+id/btnUserName"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/edit"
-                    android:layout_marginStart="330dp"
-                    android:layout_marginTop="15dp"/>
         </androidx.cardview.widget.CardView>
         <LinearLayout
             android:id="@+id/layoutDetails"
@@ -129,6 +135,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Phone"
+                                    android:textSize="15sp"
                                     android:layout_marginTop="20dp"
                                     android:layout_marginStart="33dp"
                                     android:textStyle="normal"/>
@@ -136,8 +143,8 @@
                                     android:id="@+id/btnUpdatePhone"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/edit"
+                                    android:layout_marginTop="20dp"
+                                    android:background="@drawable/ic_next"
                                     android:layout_marginStart="330dp"/>
                         </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -198,13 +205,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
                                     android:layout_marginStart="33dp"/>
-                                <Button
-                                    android:id="@+id/btnUpdateEmail"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/edit"
-                                    android:layout_marginStart="330dp"/>
                         </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
@@ -265,13 +265,6 @@
                                     android:textStyle="normal"
                                     android:layout_marginTop="20dp"
                                     android:layout_marginStart="33dp"/>
-                                <Button
-                                    android:id="@+id/btnUpdateId"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:background="@drawable/edit"
-                                    android:layout_marginStart="330dp"
-                                    android:layout_marginTop="5dp"/>
                         </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
