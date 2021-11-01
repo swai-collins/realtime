@@ -20,6 +20,9 @@
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.31927083333333334" />
+        <entry key="app/src/main/res/layout/fragment_id_change.xml" value="0.31927083333333334" />
+        <entry key="app/src/main/res/layout/fragment_name_change.xml" value="0.31927083333333334" />
+        <entry key="app/src/main/res/layout/fragment_phone_change.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_r_s_v_p.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.31927083333333334" />
